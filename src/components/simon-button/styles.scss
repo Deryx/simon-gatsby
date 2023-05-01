@@ -1,0 +1,59 @@
+$color-green: rgb(0 128 0);
+$color-red: rgb(255 0 0);
+$color-yellow: rgb(245 161 53);
+$color-blue: rgb(0 0 255);
+
+[class*='button'] {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+}
+
+.button {
+
+    &--green {
+        background-color: $color-green;
+        border-top-left-radius: 23.75rem;
+
+        &-pressed {
+            border-top-left-radius: 23.75rem;
+            background-color: lighten($color-green, 20%);
+        }
+    }
+
+    &--red {
+        background-color: $color-red;
+        border-top-right-radius: 23.75rem;
+        margin-left: 20px;
+        margin-bottom: 20px;    
+
+        &-pressed {
+            border-top-right-radius: 23.75rem;
+            margin-left: 20px;
+            margin-bottom: 20px;    
+            background-color: lighten($color-red, 20%);
+        }
+    }
+
+    &--yellow {
+        background-color: $color-yellow;
+        border-bottom-left-radius: 23.75rem;
+
+        &-pressed {
+            border-bottom-left-radius: 23.75rem;
+            background-color: lighten($color-yellow, 20%);
+        }
+    }
+
+    &--blue {
+        background-color: $color-blue;
+        border-bottom-right-radius: 23.75rem;
+        margin-left: 20px;
+
+        &-pressed {
+            border-bottom-right-radius: 23.75rem;
+            margin-left: 20px;
+                background-color: lighten($color-blue, 20%);
+        }
+    }
+}

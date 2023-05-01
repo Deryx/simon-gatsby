@@ -1,0 +1,33 @@
+.strict {
+    display: flex;
+    flex-direction: column;
+    width: 4.06rem;
+    height: 6.25rem;
+    align-items: center;
+
+    .indicator {
+        margin: 0 auto;
+        margin-top: -15px;
+        margin-bottom: 5px;
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 50%;
+        background-color: rgb(255 0 0);
+        clear: both;
+    }
+
+    .button {
+        width: 2.1875rem;
+        height: 2.1875rem;
+        background-color: rgb(245 161 53);
+        border-radius: 50%;
+        border: 5px solid rgb(127 136 141);
+        margin: 0 auto;
+    }
+
+    .label {
+        text-transform: uppercase;
+        color: rgb(255 255 255);
+        margin-top: 1.5625rem;
+    }
+}

@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 23.125rem;
+    height: 23.125rem;
+    border-radius: 50%;
+    position: absolute;
+	top: 26.5%;
+	left: 26.5%;
+	z-index: 99;
+    background-color: rgb(0 0 0);
+    font-family: 'Roboto', sans-serif;
+
+    .controls {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        height: 6.25rem;
+    }
+
+    .switch {
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,21 @@
+.start-button {
+    display: flex;
+    flex-direction: column;
+    height: 7rem;
+    width: 4.06rem;
+    align-items: center;
+
+    .button {
+        width: 2.1875rem;
+        height: 2.1875rem;
+        background: green;
+        border-radius: 50%;
+        border: 0.3125rem solid rgb(127 140 141);
+    }
+
+    .label {
+        text-transform: uppercase;
+        color: rgb(255 255 255);
+        margin-top: 1.5625rem;
+    }
+}
