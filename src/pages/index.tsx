@@ -13,9 +13,10 @@ const IndexPage = () => {
     player: []
   }
 
-  let round = 1;
+  let round: number = 1;
 
   const [gameOff, setGameOff] = useState(true);
+  const [isPlayerTurn, setIsPlayerTurn] = useState(false);
   const [counter, setCounter] = useState(COUNTER_BLANK);
 
   const changeCounter = ( newCounter: any ) => {
@@ -67,14 +68,16 @@ const IndexPage = () => {
   }
 
   const handleSimonButtonClick = ( event: any ) => {
-    if( !gameOff ) {
       event.preventDefault();
 
-      const button_clicked = event.target.id;
-      const button_clicked_number = button_clicked[button_clicked.length - 1];
-      lightSimonButton( button_clicked_number );
-      updatePlayerPattern( parseInt(button_clicked_number ) );
-    }
+      if( !gameOff ) {
+        if( isPlayerTurn ) {
+          const button_clicked = event.target.id;
+          const button_clicked_number = button_clicked[button_clicked.length - 1];
+          lightSimonButton( button_clicked_number );
+          updatePlayerPattern( parseInt(button_clicked_number ) );
+        }
+      }
   }
 
   const handlePowerClick = ( event: any ) => {
@@ -141,16 +144,19 @@ const IndexPage = () => {
     for(let i = 0; i < round; i++){
       setTimeout(() => playSimonButton( patterns.simon[i] ), i * 800);
     }
+    setIsPlayerTurn(true);
   }
 
   const playSimonRound = () => {
-    if( !gameOff && round <= MAX_STEPS ) {
-      changeCounter( round );
-      playSimonPattern( round );
-      setTimeout(() => {
-        round += 1;
-        playSimonRound();
-      }, round * 1000);
+    if( !gameOff ) {
+      if( round <= MAX_STEPS ) {
+        changeCounter( round );
+        playSimonPattern( round );
+        setTimeout(() => {
+          round += 1;
+          playSimonRound();
+        }, round * 5000);
+      }
    }
   }
 
