@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 .panel {
     display: flex;
     flex-direction: column;
@@ -25,5 +23,34 @@
     .switch {
         display: flex;
         justify-content: center;
+    }
+}
+
+.console {
+	margin: 0 auto;
+    margin-top: 50px;
+	padding: 40px;
+	width: 43.75rem;
+	height: 43.75rem;
+	border-radius: 50%;
+	background: #000;
+	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .buttons {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        z-index: 50;    
+
+        .row {
+            width: 100%;
+            display: flex;
+        }
     }
 }

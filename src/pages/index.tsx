@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from "react"
-import GameConsole from "../components/game-console/game-console";
-import SimonButton from "../components/simon-button/simon-button";
-
+import SimonButton from '../components/simon-button/simon-button';
+import NamePlate from '../components/nameplate/nameplate';
+import PatternCounter from '../components/pattern-counter/pattern-counter';
+import StartButton from '../components/start-button/start-button';
+import StrictButton from '../components/strict-button/strict-button';
+import PowerSwitch from '../components/power-switch/power-switch';
+import './styles.scss';
 
 const IndexPage = () => {
   const COUNTER_BLANK: string = '';
   const COUNTER_ON: string = '--';
   const COUNTER_WRONG: string = '!!';
   const MAX_STEPS: number = 20;
-  const consoleRef = useRef();
 
+  const [count, setCount] = useState( COUNTER_BLANK )
   const [simonPattern, setSimonPattern] = useState<number[]>([]);
   const [gameOff, setGameOff] = useState(true);
   const [isPlayerTurn, setIsPlayerTurn] = useState(false);
@@ -23,18 +27,18 @@ const IndexPage = () => {
     createSimonPattern();
   }, []);
 
-  const changeCounter = ( newCounter: any ) => {
-    if(typeof newCounter === 'number') {
-      if( newCounter <= 9 ) {
-        counter = '0' + newCounter;
+  const changeCounter = ( newCount: any ) => {
+    if(typeof newCount === 'number') {
+      if( newCount <= 9 ) {
+        counter = '0' + newCount;
       } else {
-        counter = newCounter.toString();
+        counter = newCount.toString();
       }
     } else {
-      counter = newCounter;
+      counter = newCount;
     }
 
-    consoleRef.current.patternCtr.innerHTML = counter;
+    setCount( counter );
   }
 
   const updateSimonPattern = ( btn: number ) => {
@@ -53,16 +57,14 @@ const IndexPage = () => {
     return simonPattern[simonClick] === playerPattern[simonClick];
   }
 
-  const handleSimonButtonClick = ( event: any ) => {
-      event.preventDefault();
-
+  const processPlayerTurn = () => {
       if( !gameOff ) {
         if( isPlayerTurn ) {
-          const buttonClicked = event.target.id;
-          const buttonClickedNumber = buttonClicked[buttonClicked.length - 1];
-          playerPattern = [...playerPattern, buttonClickedNumber];
-          lightSimonButton( buttonClickedNumber );
-          console.log(playerPattern);
+          // const buttonClicked = consoleRef.current?.blueButton.current.id;
+          // const buttonClickedNumber = buttonClicked[buttonClicked.length - 1];
+          // playerPattern = [...playerPattern, buttonClickedNumber];
+          // lightSimonButton( buttonClickedNumber );
+          // console.log(playerPattern);
           // if(playerClickMatches()) {
           //   simonClick++;
           // } else {
@@ -73,7 +75,21 @@ const IndexPage = () => {
       }
   }
 
-  const handlePowerClick = ( event: any ) => {
+  const processPlayerClick = ( event: any ) => {
+    event?.preventDefault();
+
+
+  }
+
+  const createSimonPattern = () => {
+    let count = 0;
+    while( count < MAX_STEPS ) {
+      setSimonPattern( prev => [...prev, getRandomButton()] );
+      count++;
+    }
+  }
+
+  const handlePowerClickFunction = ( event: any ):void => {
     event.preventDefault();
 
     const powerButton = event.target.parentNode;
@@ -90,26 +106,36 @@ const IndexPage = () => {
     }
   }
 
-  const playerTimer = () => {
-    setTimeout( handleSimonButtonClick, 1000 );
-  }
+  const handleStartClickFunction = ( event: any ) => {
+    event.preventDefault();
 
-  const createSimonPattern = () => {
-    let count = 0;
-    while( count < MAX_STEPS ) {
-      setSimonPattern( prev => [...prev, getRandomButton()] );
-      count++;
-    }
-  }
-
-  const handleStartClick = () => {
     if( !gameOff ) {
       playSimonRound();
     }
   }
 
-  const handleStrictClick = () => {
+  const handleStrictClickFunction = ( event: any ) => {
 
+  }
+
+  const handleSimonClick = ( event: any ) => {
+    event.preventDefault();
+
+    if( !gameOff ) {
+      if( isPlayerTurn ) {
+        const buttonClicked = event.target.id;
+        const buttonClickedNumber = buttonClicked[buttonClicked.length - 1];
+        playerPattern = [...playerPattern, buttonClickedNumber];
+        lightSimonButton( buttonClickedNumber );
+        console.log(playerPattern);
+        // if(playerClickMatches()) {
+        //   simonClick++;
+        // } else {
+        //   simonClick = 1;
+        //   changeCounter( COUNTER_WRONG );
+        // }
+      }
+    }  
   }
 
   const lightSimonButton = ( btn: number ) => {
@@ -151,14 +177,45 @@ const IndexPage = () => {
   }
 
   return (
-    <GameConsole 
-      ref={ consoleRef }
-      count={ counter } 
-      handleButtonClick={ handleSimonButtonClick }
-      powerClickFunction={ handlePowerClick } 
-      startClickFunction={ handleStartClick } 
-      strictClickFunction={ handleStrictClick }
-    />
+    <div className="console">
+      <div className='buttons'>
+        <div className='row'>
+            <SimonButton 
+                buttonId='1' 
+                buttonClass='green' 
+                handleClick={ handleSimonClick }
+            />
+            <SimonButton 
+                buttonId='2' 
+                buttonClass='red' 
+                handleClick={ handleSimonClick }
+            />
+        </div>
+        <div className='row'>
+            <SimonButton 
+                buttonId='3' 
+                buttonClass='yellow' 
+                handleClick={ handleSimonClick }
+            />
+            <SimonButton 
+                buttonId='4' 
+                buttonClass='blue' 
+                handleClick={ handleSimonClick }
+            />
+        </div>
+      </div>
+      <div className='panel'>
+            <NamePlate />
+            <div className='controls'>
+                <PatternCounter counter={ count } />
+                <StartButton handleClick={ handleStartClickFunction } />
+                <StrictButton handleClick={ () => handleStrictClickFunction } />
+            </div>
+            <div className='switch'>
+                <PowerSwitch handleClick={ handlePowerClickFunction } />
+            </div>
+        </div>
+    </div>
   )
 }
 

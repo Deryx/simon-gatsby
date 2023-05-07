@@ -2,15 +2,15 @@ import React, { forwardRef } from 'react';
 import PatternCounterProps from './props';
 import './styles.scss';
 
-const PatternCounter = forwardRef(({ count }: PatternCounterProps, _ref: any ) => {
+const PatternCounter = ({ counter }: PatternCounterProps ) => {
     return (
         <div className='counter'>
-            <div ref={ _ref } className='count'>
-                { count }
+            <div className='count'>
+                { counter }
             </div>
             <p className='label'>count</p>
         </div>
     )
-})
+}
 
 export default PatternCounter;
