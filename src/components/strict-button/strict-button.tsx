@@ -5,7 +5,7 @@ import './styles.scss';
 const StrictButton = ({ handleClick }: StrictButtonProps ) => {
     return (
         <div className='strict'>
-            <div className='indicator' />
+            <div className='indicator indicator--off' />
             <button className='button' onClick={ handleClick } />
             <p className='label'>strict</p>
         </div>

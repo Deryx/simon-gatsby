@@ -15,12 +15,13 @@ const IndexPage = () => {
 
   const patternCtrRef = useRef();
 
-  let round: number = 0;
+  let round: number;
   let numPlayerClicks: number;
   let simonPattern: number[] = [];
   let playerPattern: number[] = [];
   let gameOff: boolean;
   let isPlayerTurn: boolean;
+  let strictMode: boolean;
 
   const changeCounterDisplay = ( displayItem: any ) => {
     let item: any = displayItem;
@@ -55,7 +56,8 @@ const IndexPage = () => {
 
     const powerButton = event.target.parentNode;
     const powerButtonClasses = powerButton.classList;
-    
+    strictMode = false;
+
     if(powerButtonClasses.contains('power-switch--on')) {
       powerButtonClasses.remove('power-switch--on');
       changeCounterDisplay( COUNTER_BLANK );
@@ -72,6 +74,7 @@ const IndexPage = () => {
     event.preventDefault();
 
     if( !!!gameOff ) {
+      round = 0;
       createSimonPattern();
       numPlayerClicks = 0;
       isPlayerTurn = false;
@@ -80,7 +83,19 @@ const IndexPage = () => {
   }
 
   const handleStrictClickFunction = ( event: any ) => {
+    event.preventDefault();
+    const strictModeIndicator = document.querySelector('.indicator');
 
+    if( !!!gameOff ) {
+      strictMode = !!!strictMode;
+      if(!!strictMode) {
+        strictModeIndicator?.classList.remove('indicator--off');
+        strictModeIndicator?.classList.add('indicator--on');
+      } else {
+        strictModeIndicator?.classList.remove('indicator--on');
+        strictModeIndicator?.classList.add('indicator--off');
+      }
+    }
   }
 
   const handleSimonClick = ( event: any ) => {
@@ -92,15 +107,21 @@ const IndexPage = () => {
         if( numPlayerClicks <= round) {
           numPlayerClicks++;
           currentIndex = numPlayerClicks - 1;
-          console.log(currentIndex);
           const buttonClicked = event.target.id;
           const buttonClickedNumber = parseInt( buttonClicked[buttonClicked.length - 1] );
           playerPattern = [...playerPattern, buttonClickedNumber];
-          console.log(playerPattern);
           lightSimonButton( buttonClickedNumber );
-          if(!(simonPattern[currentIndex] === playerPattern[currentIndex])) {
+          if(!(simonPattern[currentIndex] === playerPattern[currentIndex]) && !!!strictMode) {
             changeCounterDisplay( COUNTER_WRONG );
             isPlayerTurn = false;
+          } else if(!(simonPattern[currentIndex] === playerPattern[currentIndex]) && !!strictMode) {
+            changeCounterDisplay( COUNTER_WRONG );
+            round = 0;
+            simonPattern = [];
+            createSimonPattern();
+            numPlayerClicks = 0;
+            isPlayerTurn = false;
+            setTimeout( playSimonRound, 1000 );;
           }
         } else {
           isPlayerTurn = false;
