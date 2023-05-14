@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import SimonButtonProps from './props';
 import './styles.scss';
 
 
-const SimonButton = ({ buttonId, buttonClass, handleClick }: SimonButtonProps, _ref: any ) => {
+const SimonButton = ({ buttonId, buttonClass, handleClick }: SimonButtonProps ) => {
     return (
         <div id={ `simonButton-${buttonId}` } className={ `button--${buttonClass}` } onClick={ handleClick }>
             <audio />
