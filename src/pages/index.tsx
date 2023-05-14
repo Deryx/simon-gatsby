@@ -121,7 +121,7 @@ const IndexPage = () => {
             createSimonPattern();
             numPlayerClicks = 0;
             isPlayerTurn = false;
-            setTimeout( playSimonRound, 1000 );;
+            setTimeout( playSimonRound, 3000 );;
           }
         } else {
           isPlayerTurn = false;
