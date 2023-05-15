@@ -138,10 +138,26 @@ const IndexPage = () => {
     ( target_button && originalClass ) && target_button.classList.remove(originalClass);
     target_button && target_button.classList.add(litClass);
 
+    playSimonSound( btn );
+    
     setTimeout(() => {
       target_button && target_button.classList.remove(litClass);
       ( target_button && originalClass ) && target_button.classList.add(originalClass);
     }, 400);
+  }
+
+  const playSimonSound = ( btn: number ) => {
+    const simonSounds: any = {
+      1: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
+      2: "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
+      3: "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
+      4: "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"
+    }
+
+    const sound = simonSounds[btn];
+    const button: HTMLElement | null = document.querySelector( `#simonButton-${btn} audio` );
+    button.innerHTML = "'<source src='" + sound + "'>";
+    button.play();
   }
 
   const playSimonButton = ( btn: number ) => {
